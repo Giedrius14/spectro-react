@@ -1,31 +1,39 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import './CurrentPrice.css';
 
-import {simpleAction} from './actions/simpleAction'
+import {fetchCurrentPrice} from './actions'
 
 class CurrentPriceContainer extends Component {
 
-    simpleAction = () => {
-        this.props.simpleAction();
+    componentDidMount() {
+        this.props.fetchCurrentPrice();
+    }
+
+    fetchCurrentPrice = () => {
+        this.props.fetchCurrentPrice();
     };
 
     render() {
         return (
             <div className="CurrentPriceContainer">
                 <pre>{JSON.stringify(this.props)}</pre>
-                <button onClick={this.simpleAction}>Test redux action</button>
+                <button onClick={this.fetchCurrentPrice}>Test redux action</button>
             </div>
         );
     }
 }
 
-const mapDispatchToProps = dispatch => ({
-    simpleAction: () => dispatch(simpleAction())
-});
-
-const mapStateToProps = state => ({
-    ...state
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CurrentPriceContainer);
+const mapStateToProps = state => {
+    const {currencyRates, isLoading} = state.currentPrice;
+    return {
+        currencyRates,
+        isLoading
+    };
+};
+CurrentPriceContainer.propTypes = {
+    isLoading: PropTypes.bool.isRequired,
+    fetchCurrentPrice: PropTypes.func.isRequired,
+};
+export default connect(mapStateToProps, {fetchCurrentPrice})(CurrentPriceContainer);

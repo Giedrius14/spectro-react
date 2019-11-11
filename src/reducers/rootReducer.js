@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import simpleReducer from "../components/CurrentPrice/reducers/simpleReducer";
+import {currentPrice} from "../components/CurrentPrice/reducers/currentPrice";
 
 export default combineReducers({
-  simpleReducer
+  currentPrice
 });
