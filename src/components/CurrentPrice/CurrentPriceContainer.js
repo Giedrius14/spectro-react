@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import './CurrentPrice.css';
 
 import {fetchCurrentPrice} from './actions'
+import {compose} from "redux";
 
 class CurrentPriceContainer extends Component {
 
@@ -16,6 +17,7 @@ class CurrentPriceContainer extends Component {
     };
 
     render() {
+        const { currencyRates } = this.props;
         return (
             <div className="CurrentPriceContainer">
                 <pre>{JSON.stringify(this.props)}</pre>
@@ -26,7 +28,7 @@ class CurrentPriceContainer extends Component {
 }
 
 const mapStateToProps = state => {
-    const {currencyRates, isLoading} = state.currentPrice;
+    const {isLoading, currencyRates } = state.currentPrice.toJS();
     return {
         currencyRates,
         isLoading
@@ -36,4 +38,4 @@ CurrentPriceContainer.propTypes = {
     isLoading: PropTypes.bool.isRequired,
     fetchCurrentPrice: PropTypes.func.isRequired,
 };
-export default connect(mapStateToProps, {fetchCurrentPrice})(CurrentPriceContainer);
+export default compose(connect(mapStateToProps, {fetchCurrentPrice}))(CurrentPriceContainer);

@@ -4,10 +4,10 @@ export const fetchCurrentPrice = () => dispatch => {
     dispatch({type: CURRENT_PRICE_FETCH.PENDING});
     return fetch(CURRENT_PRICE_ENDPOINT, {method: "GET"})
         .then(res => res.json())
-        .then(bpi => {
+        .then(res => {
                 dispatch({
                     type: CURRENT_PRICE_FETCH.SUCCESS,
-                    bpi
+                    payload: res.bpi,
                 });
             }
         ).catch(error =>{

@@ -8,23 +8,21 @@ const initialState = {
 export const currentPrice = (state = fromJS(initialState), action = {}) => {
   switch (action.type) {
     case CURRENT_PRICE_FETCH.PENDING: {
-      return {
+      return state.merge({
         isLoading: true,
-      };
+      });
     }
     case CURRENT_PRICE_FETCH.SUCCESS: {
-      return {
-        currencyRates: action.payload,
+      const payload = action.payload;
+      return state.merge({
+        currencyRates: payload,
         isLoading: false,
-      };
+      });
     }
     case CURRENT_PRICE_FETCH.FAIL: {
-      return {
-        error: action.payload,
-        isLoading: false,
-      };
+      return fromJS(initialState);
     }
     default:
       return state;
   }
-}
+};
